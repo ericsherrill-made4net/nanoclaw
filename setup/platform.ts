@@ -1,7 +1,7 @@
 /**
  * Cross-platform detection utilities for NanoClaw setup.
  */
-import { execSync } from 'child_process';
+import { execSync, execFileSync } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 
@@ -57,7 +57,7 @@ export function openBrowser(url: string): boolean {
   try {
     const platform = getPlatform();
     if (platform === 'macos') {
-      execSync(`open ${JSON.stringify(url)}`, { stdio: 'ignore' });
+      execFileSync('open', [url], { stdio: 'ignore' });
       return true;
     }
     if (platform === 'linux') {
@@ -108,7 +108,7 @@ export function getNodePath(): string {
 
 export function commandExists(name: string): boolean {
   try {
-    execSync(`command -v ${name}`, { stdio: 'ignore' });
+    execFileSync('command', ['-v', name], { stdio: 'ignore' });
     return true;
   } catch {
     return false;
