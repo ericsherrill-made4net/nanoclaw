@@ -164,6 +164,9 @@ function setupLinux(
  * Prevents connection conflicts when two instances connect to the same channel simultaneously.
  */
 function killOrphanedProcesses(projectRoot: string): void {
+  if (!/^[a-zA-Z0-9_\-\./\\]+$/.test(projectRoot)) {
+    throw new Error('Invalid input');
+  }
   try {
     execSync(`pkill -f '${projectRoot}/dist/index\\.js' || true`, {
       stdio: 'ignore',
